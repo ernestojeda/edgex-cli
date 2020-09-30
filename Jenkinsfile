@@ -34,6 +34,7 @@ pipeline {
             }
             steps {
                 sh 'make test'
+                sh "export CODECOV_TOKEN=b2f9d1d8-d561-4c59-9f93-c863cf70ef04 && env | sort && curl -s https://codecov.io/bash | bash -s --"
             }
         }
     }
