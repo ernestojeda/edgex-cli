@@ -14,11 +14,23 @@
 // limitations under the License.
 //
 
-edgeXBuildGoApp (
-    project: 'edgex-cli',
-    arch: ['amd64'],
-    testScript: 'make test',
-    buildScript: 'make build-all',
-    artifactTypes: ['archive'],
-    artifactRoot: './archives/bin'
-) 
+pipeline {
+    agent { label 'ubuntu18.04-docker-8c-8g' }
+    environment {
+        ARCH = 'x86_64'
+    }
+    stages {
+        stage('Test') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.build'
+                    additionalBuildArgs '--build-arg BASE=nexus3.edgexfoundry.org:10003/edgex-devops/edgex-golang-base:1.15-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh 'make test'
+            }
+        }
+    }
+}
