@@ -16,6 +16,9 @@
 
 pipeline {
     agent { label 'ubuntu18.04-docker-8c-8g' }
+    options {
+        timestamps()
+    }
     environment {
         ARCH = 'x86_64'
     }
