@@ -25,6 +25,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.build'
                     additionalBuildArgs '--build-arg BASE=nexus3.edgexfoundry.org:10003/edgex-devops/edgex-golang-base:1.15-alpine'
+                    args '-u 0:0 --privileged'
                     reuseNode true
                 }
             }
